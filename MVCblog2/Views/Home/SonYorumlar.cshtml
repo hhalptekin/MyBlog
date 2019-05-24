@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MVCblog2.Models.Yorum>
+@{
+    Layout = null;
+}
+
+<h5 class="card-header">Son Yapılan Yorumlar</h5>
+<div class="card-body">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li >
+                <a href="/Home/MakaleDetay/@item.Makale.MakaleID">@item.Makale.Baslik</a> - @item.İcerik
+            </li>
+        }
+    </ul>
+</div>
+
+    
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Makale.Baslik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.İcerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Makale.Baslik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uye.KullaniciAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.İcerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tarih)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.YorumID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.YorumID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.YorumID })
+        </td>
+    </tr>
+}
+
+</table>*@

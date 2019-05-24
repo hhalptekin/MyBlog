@@ -1,0 +1,205 @@
+﻿@model MVCblog2.Models.Makale
+
+@{
+    ViewBag.Title = "MakaleDetay";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+
+<link href="~/Template/Home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="~/Template/Home/css/blog-home.css" rel="stylesheet">
+
+<link href="@Url.Content("~/Content/Css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="/Template/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="/Template/admin/css/plugins/morris.css" rel="stylesheet">
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+<div class="col-md-12">
+
+    <h1 class="mt-4"></h1>
+    <!-- Author -->
+    <p class="lead">
+        <img class="img-responsive rounded-circle" width="40" src="@Model.Uye.Foto" />
+        <a href="/Uye/UyeProfil/@Model.UyeID">@Model.Uye.AdSoyad</a>
+    </p>
+    <hr>
+    <!-- Date/Time -->
+    <span>  @string.Format("{0: MMMM yyyy}", Model.Tarih) | @Model.Kategori.KategoriAdi (@Model.Kategori.Makales.Count()) | Yorumlar (@Model.Yorums.Count())  </span>
+    <hr>
+    <!-- Preview Image -->
+    <h1 class="mt-4">@Model.Baslik</h1>
+    <hr>
+    <!-- Post Content -->
+    <p class="lead">@Html.Raw(Model.Icerik)</p>
+
+    <div class="well">
+        <hr />
+        @foreach (var item in Model.Etikets)
+        {
+            <p class="lead"><span>Etiketler : @item.EtiketAdi </span></p>
+        }
+    </div>
+
+    @if (Session["uyeid"] != null)
+    {
+        <div class="card my-4">
+            <h5 class="card-header">Yorum</h5>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="yorum" typeof="text" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button id="gonder" type="submit" class="btn btn-primary">Yorum Yap</button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2>Yorum Yapmak İçin<a href="/Uye/Login"> Giriş Yap </a></h2>
+    }
+    <hr />
+    <div style="display:block;" class="media col-md-12">
+
+        @foreach (var item in Model.Yorums.ToList())
+        {
+            <div class="well">
+
+                <img class="img-responsive rounded-circle" width="40" src="@item.Uye.Foto" alt="@item.Uye.AdSoyad">
+                <span>
+                    
+                    <small> @string.Format("{0:dddd MMMM yyyy}", item.Tarih)</small> <span>
+                        @if (Convert.ToInt32(Session["uyeid"]) == item.UyeID)
+                        {
+
+                            <a class="btn btn-danger" href="/Home/YorumSil/@item.YorumID">Sil</a>
+
+                        }
+                    </span>
+                </span>
+                <div class="media-body">
+
+                    @item.Uye.KullaniciAdi | <em>@item.İcerik</em>
+
+
+
+
+                </div>
+            </div>
+            <hr />
+
+        }
+
+    </div>
+
+</div>
+
+<script src="/Template/admin/js/plugins/morris/raphael.min.js"></script>
+<script src="/Template/admin/js/plugins/morris/morris.min.js"></script>
+<script src="/Template/admin/js/plugins/morris/morris-data.js"></script>
+
+<script src="~/Template/Home/vendor/jquery/jquery.min.js"></script>
+<script src="~/Template/Home/vendor/popper/popper.min.js"></script>
+<script src="~/Template/Home/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#gonder").click(function () {
+
+
+            var yorumunuz = $("#yorum").val();
+            $.ajax({
+                url: '/Home/YorumYap',
+                data: { yorum: yorumunuz, Makaleid :@Model.MakaleID},
+                type:'POST',
+                dataType:'json',
+                success:function (data) {
+
+                }
+            });
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+
+            url:'/Home/OkumaArttir/',
+            data:{Makaleid:@Model.MakaleID},
+            type:'POST'
+
+        });
+    })
+</script>
+
+@*<h2>MakaleDetay</h2>
+
+    <div>
+        <h4>Makale</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Kategori.KategoriAdi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Kategori.KategoriAdi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Uye.KullaniciAdi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Baslik)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Icerik)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Icerik)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Foto)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Foto)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Tarih)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Okunma)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Okunma)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MakaleID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

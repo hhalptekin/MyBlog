@@ -1,0 +1,57 @@
+﻿@model MVCblog2.Models.Yorum
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h4>Yorum Sil</h4>
+
+<h3>Emin misiniz?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Makale.Baslik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Makale.Baslik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uye.KullaniciAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.İcerik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.İcerik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            @Html.ActionLink("Geri Dön", "Index") | 
+            <input type="submit" value="Sil" class="btn btn-danger" /> 
+
+        </div>
+    }
+</div>

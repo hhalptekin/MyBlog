@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MVCblog2.Models.Makale>
+
+@{
+    ViewBag.Title = "KategoriMakale";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@using GridMvc.Html
+<h2>Kategoriye Ait Makaleler</h2>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(foo => foo.Kategori.KategoriAdi).Titled("Kategori Adı").SetWidth(110).Sortable(true).Filterable(true);
+    columns.Add(foo => foo.Baslik).Sortable(true).Filterable(true);
+    columns.Add(foo => foo.Tarih).Sortable(true).Filterable(true);
+    columns.Add(foo => foo.Okunma).Sortable(true).Filterable(true);
+}).WithPaging(3)
+
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Kategori.KategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Baslik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Icerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Foto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Okunma)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kategori.KategoriAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uye.KullaniciAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Baslik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Icerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Foto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Okunma)
+        </td>
+
+    </tr>
+}
+
+</table>*@
